@@ -13,7 +13,7 @@ public class PluginDatabase {
     }
 
     public static PluginDatabase from(ConfigurationNode node, DatabaseTranslatorRegistry registry) {
-        return new PluginDatabaseClient(node.getNode("uri").getString("mongodb://localhost:27017"), registry).database(node.getNode("name").getString());
+        return new PluginDatabaseClient(node.getNode("uri").getString("mongodb://localhost:27017"), registry).database(node.getNode("name").getString("database"));
     }
 
     public static PluginDatabase from(ConfigurationNode node) {
