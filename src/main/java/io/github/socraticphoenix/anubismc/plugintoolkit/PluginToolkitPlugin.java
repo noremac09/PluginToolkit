@@ -6,6 +6,7 @@ import io.github.socraticphoenix.anubismc.plugintoolkit.data.impl.ImmutableTrans
 import io.github.socraticphoenix.anubismc.plugintoolkit.data.impl.ImmutableTransientDataImpl;
 import io.github.socraticphoenix.anubismc.plugintoolkit.data.impl.MutableTransientData;
 import io.github.socraticphoenix.anubismc.plugintoolkit.data.impl.MutableTransientDataImpl;
+import io.github.socraticphoenix.anubismc.plugintoolkit.data.impl.TransientDataBuilder;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataRegistration;
 import org.spongepowered.api.data.key.Key;
@@ -43,6 +44,7 @@ public class PluginToolkitPlugin {
                 .dataImplementation(MutableTransientDataImpl.class)
                 .immutableClass(ImmutableTransientData.class)
                 .immutableImplementation(ImmutableTransientDataImpl.class)
+                .builder(new TransientDataBuilder())
                 .id("plugintoolkit_transient_data")
                 .name("Transient Data")
                 .build();
