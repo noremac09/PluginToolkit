@@ -3,6 +3,7 @@ package io.github.socraticphoenix.anubismc.plugintoolkit.data.impl;
 import io.github.socraticphoenix.anubismc.plugintoolkit.PluginToolkitPlugin;
 import io.github.socraticphoenix.anubismc.plugintoolkit.data.TransientData;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.manipulator.immutable.common.AbstractImmutableSingleData;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
 
@@ -34,4 +35,8 @@ public class ImmutableTransientDataImpl extends AbstractImmutableSingleData<Tran
         return 0;
     }
 
+    @Override
+    protected DataContainer fillContainer(DataContainer dataContainer) {
+        return dataContainer;
+    }
 }
