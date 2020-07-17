@@ -1,6 +1,7 @@
 package io.github.socraticphoenix.anubismc.plugintoolkit.database;
 
 import com.mongodb.client.MongoDatabase;
+import ninja.leaping.configurate.ConfigurationNode;
 
 public class PluginDatabase {
     private MongoDatabase database;
@@ -9,6 +10,14 @@ public class PluginDatabase {
     public PluginDatabase(MongoDatabase database, DatabaseTranslatorRegistry registry) {
         this.database = database;
         this.registry = registry;
+    }
+
+    public static PluginDatabase from(ConfigurationNode node, DatabaseTranslatorRegistry registry) {
+        return new PluginDatabaseClient(node.getNode("uri").getString("mongodb://localhost:27017"), registry).database(node.getNode("name").getString());
+    }
+
+    public static PluginDatabase from(ConfigurationNode node) {
+        return from(node, DatabaseTranslatorRegistry.GLOBAL);
     }
 
     public <T, K> PluginDatabaseCollection<T, K> collection(String name, Class<T> value, Class<K> key) {
