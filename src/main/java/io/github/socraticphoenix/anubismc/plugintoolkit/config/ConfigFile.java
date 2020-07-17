@@ -1,9 +1,11 @@
 package io.github.socraticphoenix.anubismc.plugintoolkit.config;
 
+import com.google.inject.internal.cglib.proxy.$Callback;
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.asset.Asset;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.TextTemplate;
@@ -20,6 +22,10 @@ public class ConfigFile {
     private ConfigurationLoader<CommentedConfigurationNode> loader;
 
     private ConfigurationNode node;
+
+    public static ConfigFile of(Path dir, String name, Object plugin) {
+        return new ConfigFile(dir.resolve(name + ".conf"), Sponge.getAssetManager().getAsset(plugin, "default_" + name + ".conf").orElse(null));
+    }
 
     public ConfigFile(Path path) {
         this(path, null);
