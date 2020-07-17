@@ -1,5 +1,6 @@
 package io.github.socraticphoenix.anubismc.plugintoolkit.database;
 
+import io.github.socraticphoenix.anubismc.plugintoolkit.database.translators.DefaultKeyTranslator;
 import io.github.socraticphoenix.anubismc.plugintoolkit.database.translators.IdentifiableTranslator;
 import io.github.socraticphoenix.anubismc.plugintoolkit.database.translators.UUIDTranslator;
 
@@ -35,7 +36,7 @@ public class DatabaseTranslatorRegistry {
     }
 
     public <K> KeyTranslator<K> getKeyFor(Class<K> type) {
-        return (KeyTranslator<K>) this.keyTranslators.stream().filter(k -> k.type().isAssignableFrom(type)).findFirst().orElseThrow(() -> new IllegalArgumentException("No key translator for: " + type.getName()));
+        return (KeyTranslator<K>) this.keyTranslators.stream().filter(k -> k.type().isAssignableFrom(type)).findFirst().orElse(DefaultKeyTranslator.INSTANCE);
     }
 
 }

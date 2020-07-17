@@ -52,5 +52,13 @@ public class ConfigFile {
     public ConfigurationNode getNode() {
         return node;
     }
-    
+
+    public ConfigurationNode getNode(ConfigPath path) {
+        return path.get(this.node);
+    }
+
+    public ConfigurationNode getNode(Object... path) {
+        return getNode(ConfigPath.of(path));
+    }
+
 }

@@ -23,10 +23,11 @@ public class ConfigPath {
     }
 
     public ConfigurationNode get(ConfigurationNode node) {
-        for (Object obj : this.path) {
-            node = node.getNode(obj);
-        }
-        return node;
+        return node.getNode(this.path);
+    }
+
+    public boolean exists(ConfigurationNode node) {
+        return !get(node).isVirtual();
     }
 
     public Object[] getPath() {
