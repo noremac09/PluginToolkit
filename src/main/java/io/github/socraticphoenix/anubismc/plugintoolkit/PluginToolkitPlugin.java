@@ -7,12 +7,15 @@ import io.github.socraticphoenix.anubismc.plugintoolkit.data.impl.ImmutableTrans
 import io.github.socraticphoenix.anubismc.plugintoolkit.data.impl.MutableTransientData;
 import io.github.socraticphoenix.anubismc.plugintoolkit.data.impl.MutableTransientDataImpl;
 import io.github.socraticphoenix.anubismc.plugintoolkit.data.impl.TransientDataBuilder;
+import io.github.socraticphoenix.anubismc.plugintoolkit.database.PlayerList;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.DataRegistration;
 import org.spongepowered.api.data.key.Key;
 import org.spongepowered.api.data.value.mutable.Value;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.GameRegistryEvent;
+import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.plugin.Dependency;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.util.generator.dummy.DummyObjectProvider;
@@ -25,6 +28,21 @@ import org.spongepowered.api.util.generator.dummy.DummyObjectProvider;
 public class PluginToolkitPlugin {
     public static Key<Value<TransientData>> TRANSIENT_DATA = DummyObjectProvider.createExtendedFor(Key.class, "TRANSIENT_DATA");
     public static DataRegistration<MutableTransientData, ImmutableTransientData> TRANSIENT_DATA_REGISTRATION = DummyObjectProvider.createExtendedFor(DataRegistration.class, "TRANSIENT_DATA_REGISTRATION");
+
+    private static PluginToolkitPlugin plugin;
+
+    public PluginToolkitPlugin() {
+        plugin = this;
+    }
+
+    public static PluginToolkitPlugin get() {
+        return plugin;
+    }
+
+    @Listener
+    public void onPreInit(GamePreInitializationEvent ev) {
+        Sponge.getEventManager().registerListeners(this, PlayerList.INSTANCE);
+    }
 
     @Listener
     public void onKeyRegister(GameRegistryEvent.Register<Key<?>> ev) {
