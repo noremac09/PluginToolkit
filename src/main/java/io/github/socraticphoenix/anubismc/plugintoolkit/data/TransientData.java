@@ -8,9 +8,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TransientData {
-    private Map<Key, Object> data = new LinkedHashMap<>();
+    private Map<Key, Object> data = new ConcurrentHashMap<>();
 
     public static <T> Optional<T> get(DataHolder holder, Object plugin, String key, Class<T> type) {
         return holder.get(MutableTransientData.class).flatMap(t -> t.data().get(plugin, key, type));

@@ -4,6 +4,7 @@ import com.google.common.reflect.TypeToken;
 import io.github.socraticphoenix.anubismc.plugintoolkit.config.ConfigPath;
 import me.rojo8399.placeholderapi.PlaceholderService;
 import ninja.leaping.configurate.ConfigurationNode;
+import ninja.leaping.configurate.ValueType;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +58,21 @@ public class ConfigurableMessages {
     public ConfigurableMessages logger(Logger logger) {
         this.logger = logger;
         return this;
+    }
+
+    public ConfigurableMessages addAllEndpoints() {
+        addAllEndpoints(this.node);
+        return this;
+    }
+
+    private void addAllEndpoints(ConfigurationNode node) {
+        if (node.getValueType() == ValueType.SCALAR) {
+            this.paths.add(ConfigPath.of(node.getPath()).cutPrefix(this.node.getPath().length));
+        } else if (node.getValueType() == ValueType.LIST) {
+            node.getChildrenList().forEach(this::addAllEndpoints);
+        } else if (node.getValueType() == ValueType.MAP) {
+            node.getChildrenMap().values().forEach(this::addAllEndpoints);
+        }
     }
 
     public ConfigurableMessages load() {

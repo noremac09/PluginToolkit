@@ -26,6 +26,16 @@ public class ConfigPath {
         return node.getNode(this.path);
     }
 
+    public ConfigPath cutPrefix(int len) {
+        if (len >= path.length) {
+            return EMPTY;
+        } else {
+            Object[] newPath = new Object[path.length - len];
+            System.arraycopy(path, len, newPath, 0, newPath.length);
+            return ConfigPath.of(newPath);
+        }
+    }
+
     public boolean exists(ConfigurationNode node) {
         return !get(node).isVirtual();
     }

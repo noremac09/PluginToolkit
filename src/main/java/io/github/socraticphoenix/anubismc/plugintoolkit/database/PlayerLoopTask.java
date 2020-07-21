@@ -23,7 +23,7 @@ public class PlayerLoopTask implements Consumer<Task> {
             Player p = null;
             try {
                 p = players.get(this.index++ % players.size());
-            } catch (IndexOutOfBoundsException ignore) {
+            } catch (IndexOutOfBoundsException | ArithmeticException ignore) {
                 //I think this can technically happen if we call players.size, then another thread
                 // performs a removal. It's unlikely but just to be safe...
             }
