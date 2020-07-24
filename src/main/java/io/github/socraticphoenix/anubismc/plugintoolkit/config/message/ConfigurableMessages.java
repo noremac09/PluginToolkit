@@ -67,7 +67,7 @@ public class ConfigurableMessages {
 
     private void addAllEndpoints(ConfigurationNode node) {
         if (node.getValueType() == ValueType.SCALAR) {
-            this.paths.add(ConfigPath.of(node.getPath()).cutPrefix(this.node.getPath().length));
+            this.paths.add(ConfigPath.of(node.getPath()).cutPrefix(this.node.getPath().length - 1));
         } else if (node.getValueType() == ValueType.LIST) {
             node.getChildrenList().forEach(this::addAllEndpoints);
         } else if (node.getValueType() == ValueType.MAP) {

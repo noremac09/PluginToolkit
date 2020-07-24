@@ -7,7 +7,6 @@ import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import javax.print.Doc;
 import java.util.Optional;
 import java.util.Spliterator;
 import java.util.Spliterators;
