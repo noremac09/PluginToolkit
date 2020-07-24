@@ -29,6 +29,8 @@ public class ConfigPath {
     public ConfigPath cutPrefix(int len) {
         if (len >= path.length) {
             return EMPTY;
+        } else if (len <= 0) {
+            return this;
         } else {
             Object[] newPath = new Object[path.length - len];
             System.arraycopy(path, len, newPath, 0, newPath.length);
