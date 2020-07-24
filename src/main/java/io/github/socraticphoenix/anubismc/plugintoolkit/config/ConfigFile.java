@@ -55,6 +55,10 @@ public class ConfigFile {
         this.node = loader.load();
     }
 
+    public void save() throws IOException {
+        this.loader.save(this.node);
+    }
+
     public ConfigurationNode getNode() {
         return node;
     }

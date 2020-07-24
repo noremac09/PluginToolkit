@@ -25,4 +25,12 @@ public class CustomCatalogRegistry<T extends CatalogType> implements AdditionalC
     public Collection<T> getAll() {
         return this.types.values();
     }
+
+    public void remove(T catalog) {
+        remove(catalog.getId());
+    }
+
+    public void remove(String id) {
+        this.types.remove(id);
+    }
 }
