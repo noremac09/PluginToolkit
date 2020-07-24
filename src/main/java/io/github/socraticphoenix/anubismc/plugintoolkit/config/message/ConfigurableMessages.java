@@ -186,7 +186,7 @@ public class ConfigurableMessages {
             Optional<PlaceholderService> serviceOptional = Sponge.getServiceManager().provide(PlaceholderService.class);
             if (serviceOptional.isPresent()) {
                 PlaceholderService service = serviceOptional.get();
-                text = service.replacePlaceholders(this.text, this.source, this.observer);
+                text = service.replacePlaceholders(text, this.source, this.observer);
             }
 
             return text;

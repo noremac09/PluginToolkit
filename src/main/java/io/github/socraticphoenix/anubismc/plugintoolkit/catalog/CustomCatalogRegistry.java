@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class CustomCatalogRegistry<T extends CatalogType> implements AdditionalCatalogRegistryModule<T> {
+public abstract class CustomCatalogRegistry<T extends CatalogType> implements AdditionalCatalogRegistryModule<T> {
     private Map<String, T> types = new LinkedHashMap<>();
 
     @Override
@@ -33,4 +33,5 @@ public class CustomCatalogRegistry<T extends CatalogType> implements AdditionalC
     public void remove(String id) {
         this.types.remove(id);
     }
+
 }
