@@ -67,12 +67,26 @@ public class ConfigurableMessages {
 
     private void addAllEndpoints(ConfigurationNode node) {
         if (node.getValueType() == ValueType.SCALAR) {
-            this.paths.add(ConfigPath.of(node.getPath()).cutPrefix(this.node.getPath().length - 1));
+            this.paths.add(cut(ConfigPath.of(node.getPath())));
         } else if (node.getValueType() == ValueType.LIST) {
             node.getChildrenList().forEach(this::addAllEndpoints);
         } else if (node.getValueType() == ValueType.MAP) {
             node.getChildrenMap().values().forEach(this::addAllEndpoints);
         }
+    }
+
+    private ConfigPath cut(ConfigPath path) {
+        int nulls = 0;
+        for (int i = 0; i < this.node.getPath().length; i++) {
+            Object obj = path.getPath()[i];
+            if (obj == null) {
+                nulls++;
+            } else {
+                break;
+            }
+        }
+
+        return path.cutPrefix(this.node.getPath().length - nulls);
     }
 
     public ConfigurableMessages load() {

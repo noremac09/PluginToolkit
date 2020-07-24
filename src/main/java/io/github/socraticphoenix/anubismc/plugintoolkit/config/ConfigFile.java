@@ -1,17 +1,15 @@
 package io.github.socraticphoenix.anubismc.plugintoolkit.config;
 
-import com.google.inject.internal.cglib.proxy.$Callback;
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.asset.Asset;
-import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.TextTemplate;
-import org.spongepowered.api.text.serializer.TextSerializers;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -20,7 +18,6 @@ public class ConfigFile {
     private Asset asset;
 
     private ConfigurationLoader<CommentedConfigurationNode> loader;
-
     private ConfigurationNode node;
 
     public static ConfigFile of(Path dir, String name, Object plugin) {
@@ -37,6 +34,19 @@ public class ConfigFile {
 
         this.loader = HoconConfigurationLoader.builder()
                 .setPath(this.path).build();
+    }
+
+    public String write() throws IOException {
+        StringWriter sw = new StringWriter();
+        BufferedWriter bw = new BufferedWriter(sw);
+        
+        HoconConfigurationLoader.builder()
+                .setSink(() -> bw)
+                .build().save(this.node);
+        bw.close();
+        sw.close();
+
+        return sw.toString();
     }
 
     public void load() throws IOException {
@@ -61,6 +71,10 @@ public class ConfigFile {
 
     public ConfigurationNode getNode() {
         return node;
+    }
+
+    public ConfigurationLoader<CommentedConfigurationNode> getLoader() {
+        return loader;
     }
 
     public ConfigurationNode getNode(ConfigPath path) {
