@@ -78,7 +78,7 @@ public class ConfigurableMessages {
     private ConfigPath cut(ConfigPath path) {
         int nulls = 0;
         for (int i = 0; i < this.node.getPath().length; i++) {
-            Object obj = path.getPath()[i];
+            Object obj = this.node.getPath()[i];
             if (obj == null) {
                 nulls++;
             } else {
