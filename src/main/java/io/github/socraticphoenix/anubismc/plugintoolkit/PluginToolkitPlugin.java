@@ -21,7 +21,7 @@ import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.util.generator.dummy.DummyObjectProvider;
 
 @Plugin(
-        id = "plugintoolkit",
+        id = "socratictoolkit",
         name = "Plugin Toolkit",
         dependencies = @Dependency(id = "placeholderapi")
 )
