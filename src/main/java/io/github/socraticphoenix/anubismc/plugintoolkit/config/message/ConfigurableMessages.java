@@ -1,6 +1,7 @@
 package io.github.socraticphoenix.anubismc.plugintoolkit.config.message;
 
 import com.google.common.reflect.TypeToken;
+import io.github.socraticphoenix.anubismc.plugintoolkit.PluginToolkitPlugin;
 import io.github.socraticphoenix.anubismc.plugintoolkit.config.ConfigPath;
 import me.rojo8399.placeholderapi.PlaceholderService;
 import ninja.leaping.configurate.ConfigurationNode;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.channel.MessageReceiver;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
 import java.util.Arrays;
@@ -183,13 +185,15 @@ public class ConfigurableMessages {
                 text = text.replace("%" + entry.getKey() + "%", entry.getValue());
             }
 
-            Optional<PlaceholderService> serviceOptional = Sponge.getServiceManager().provide(PlaceholderService.class);
-            if (serviceOptional.isPresent()) {
-                PlaceholderService service = serviceOptional.get();
-                text = service.replacePlaceholders(text, this.source, this.observer);
-            }
+            return PluginToolkitPlugin.get().getPlaceHolderOptionalService().replacePlaceholders(text, this.source, this.observer);
+        }
 
-            return text;
+        public MessageBuilder send(MessageReceiver... receivers) {
+            Text text = build();
+            for (MessageReceiver receiver : receivers) {
+                receiver.sendMessage(text);
+            }
+            return this;
         }
 
     }
