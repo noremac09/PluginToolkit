@@ -37,6 +37,8 @@ shadowJar {
     relocate 'com.mongodb', 'io.github.socraticphoenix.plugintoolkit.repack.mongo'
     relocate 'org.bson', 'io.github.socraticphoenix.plugintoolkit.repack.bson'
     exclude('**/module-info.class')
+
+    classifier(null)
 }
 
 compileJava {
@@ -49,10 +51,6 @@ task javadocJar(type: Jar) {
     classifier("javadoc")
 }
 
+jar.enabled = false;
 build.dependsOn shadowJar
-
-task jars
-jars.dependsOn clean
-jars.dependsOn javadocJar
-jars.dependsOn jar
-jar.dependsOn shadowJar
+build.dependsOn javadocJar
