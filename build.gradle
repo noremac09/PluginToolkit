@@ -2,6 +2,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '4.0.4'
 }
 apply plugin: 'java'
+apply plugin: 'maven'
 
 version = '1.0.1'
 group = 'io.github.socraticphoenix.anubismc'
@@ -54,3 +55,6 @@ task javadocJar(type: Jar) {
 jar.enabled = false;
 build.dependsOn shadowJar
 build.dependsOn javadocJar
+
+install.dependsOn shadowJar
+install.dependsOn javadocJar
