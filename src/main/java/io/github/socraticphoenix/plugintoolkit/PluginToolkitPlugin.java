@@ -29,6 +29,8 @@ import org.spongepowered.api.util.generator.dummy.DummyObjectProvider;
 @Plugin(
         id = "socratictoolkit",
         name = "Plugin Toolkit",
+        version = "1.0.1",
+        authors = "SocraticPhoenix",
         dependencies = @Dependency(id = "placeholderapi", optional = true)
 )
 public class PluginToolkitPlugin {
