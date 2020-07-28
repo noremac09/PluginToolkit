@@ -1,6 +1,9 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '4.0.4'
+}
 apply plugin: 'java'
 
-version = '1.0.0'
+version = '1.0.1'
 group = 'io.github.socraticphoenix.anubismc'
 archivesBaseName = 'PluginToolkit'
 
@@ -25,11 +28,20 @@ dependencies {
     compileOnly(
             'org.spongepowered:spongeapi:7.2.0',
             'org.spongepowered:configurate-hocon:3.6.1',
-            'com.github.rojo8399:PlaceholderAPI:4.5.1',
-            'org.mongodb:mongodb-driver-sync:4.0.4'
+            'com.github.rojo8399:PlaceholderAPI:4.5.1'
     )
+    implementation('org.mongodb:mongodb-driver-sync:4.0.4')
 }
 
+shadowJar {
+    relocate 'com.mongodb', 'io.github.socraticphoenix.plugintoolkit.repack.mongo'
+    relocate 'org.bson', 'io.github.socraticphoenix.plugintoolkit.repack.bson'
+    exclude('**/module-info.class')
+}
+
+compileJava {
+    excludes = ['**/module-info.java', '**/module-info.class']
+}
 
 task javadocJar(type: Jar) {
     from javadoc
@@ -41,3 +53,4 @@ task jars
 jars.dependsOn clean
 jars.dependsOn javadocJar
 jars.dependsOn jar
+jar.dependsOn shadowJar
