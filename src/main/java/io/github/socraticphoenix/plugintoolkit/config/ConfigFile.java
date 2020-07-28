@@ -70,6 +70,7 @@ public class ConfigFile {
     }
 
     public ConfigurationNode getNode() {
+        checkLoaded();
         return node;
     }
 
@@ -78,11 +79,18 @@ public class ConfigFile {
     }
 
     public ConfigurationNode getNode(ConfigPath path) {
+        checkLoaded();
         return path.get(this.node);
     }
 
     public ConfigurationNode getNode(Object... path) {
         return getNode(ConfigPath.of(path));
+    }
+
+    private void checkLoaded() {
+        if (this.node == null) {
+            throw new IllegalStateException("Config not loaded");
+        }
     }
 
 }
